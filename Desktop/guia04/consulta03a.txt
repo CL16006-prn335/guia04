@@ -1,0 +1,37 @@
+package consultas;
+
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
+import uesocc.edu.sv.ingenieria.prn335.guia04.RolCategoria;
+
+/**
+ *
+ * @author hp
+ */
+public class consulta03a {
+    
+    public static void consulta03a(){
+       EntityManagerFactory emf=Persistence.createEntityManagerFactory("uesocc.edu.sv.ingenieria.prn335_guia04_jar_1.0-SNAPSHOTPU");
+       EntityManager em=emf.createEntityManager();
+       EntityTransaction et=em.getTransaction();
+       
+       try{
+           et.begin();
+           TypedQuery<RolCategoria> query=em.createNamedQuery( "RolCategoria.findByIdRol", RolCategoria.class);
+           List<RolCategoria> listaRolCategoria=query.getResultList();
+           et.commit();
+       }
+       catch(Exception e){
+           et.rollback();
+           System.out.println("Error: "+e.getMessage());
+           
+       }
+       finally{
+           em.close();
+       }
+   }
+}
